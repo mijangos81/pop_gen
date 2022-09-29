@@ -1,27 +1,21 @@
-# Minimal Mistakes remote theme starter
+# Interactive web application to teach population genetics
 
-Click [**Use this template**](https://github.com/mmistakes/mm-github-pages-starter/generate) button above for the quickest method of getting started with the [Minimal Mistakes Jekyll theme](https://github.com/mmistakes/minimal-mistakes).
+The COVID-19 pandemic not only forced educational institutions to shift teaching from face-to-face to online but also had detrimental repercussions on students' mental health, including depression and anxiety. These repercussions ultimately result in deficits in learning, attention, comprehension and retention.
 
-Contains basic configuration to get you a site with:
+To restore the confidence and abilities of students, it is necessary to develop and adopt new teaching and learning strategies to guarantee the academic progression of the generations of students affected by the pandemic.
 
-- Sample posts.
-- Sample top navigation.
-- Sample author sidebar with social links.
-- Sample footer links.
-- Paginated home page.
-- Archive pages for posts grouped by year, category, and tag.
-- Sample about page.
-- Sample 404 page.
-- Site wide search.
+Web applications, or simply web apps, are becoming critical resources to improve teaching and learning strategies. Web apps offer a customisable environment that can include interactive activities and visually appealing information. Furthermore, web apps are very accessible tools since all that is needed is a computer with internet access.
 
-Replace sample content with your own and [configure as necessary](https://mmistakes.github.io/minimal-mistakes/docs/configuration/).
+This project will develop an interactive web app to complement classes on population genetics at the University of Canberra and as an accompanying learning tool for the R package dartR, a genetic analysis platform used to inform conservation.
 
----
+The objectives of this project go beyond presenting concise and quality information on population genetics. The web app will include exercises based on real-time computer simulations allowing students to explore different population genetic models and manipulate their assumptions and parameters. These simulation exercises will provide a fluid and dynamic presentation of complex population genetics concepts displayed as students move sliders, enter specific values, or click buttons.
 
-## Troubleshooting
+Additionally, the web app will include creative game modules such as "Tic-Tac-Toe", "Hangman", and matching games to help students review the knowledge acquired in the different modules. The games could be scored, and the students could only access the next module if they got a specific number of points.
 
-If you have a question about using Jekyll, start a discussion on the [Jekyll Forum](https://talk.jekyllrb.com/) or [StackOverflow](https://stackoverflow.com/questions/tagged/jekyll). Other resources:
+The innovative approach used in this project will engage students, and, as a result, they will more easily understand complex concepts in population genetics. Presenting the course on a web appl offers them opportunities to review a concept multiple times.
 
-- [Ruby 101](https://jekyllrb.com/docs/ruby-101/)
-- [Setting up a Jekyll site with GitHub Pages](https://jekyllrb.com/docs/github-pages/)
-- [Configuring GitHub Metadata](https://github.com/jekyll/github-metadata/blob/master/docs/configuration.md#configuration) to work properly when developing locally and avoid `No GitHub API authentication could be found. Some fields may be missing or have incorrect data.` warnings.
+The project will use the R package Shiny (https://shiny.rstudio.com), a platform for building web- based applications.
+The capabilities of this approach are exemplified by the project “Book Of Apps for Statistics Teaching” (BOAST), developed by undergraduate students at Penn State University:
+https://shinyapps.science.psu.edu
+
+As the BOAST project showed, this type of project can be scalable by involving students in developing the web app. In the future, this project could be extended to include workshops, summer camps or a specialised class to teach interested students the skills necessary to extend and improve the web app, such as coding and a deeper understanding of selected population genetic concepts. This approach could be used to develop similar web apps for other subjects and other universities.
