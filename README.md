@@ -2,7 +2,7 @@
 
 This web application can be accessed by clicking on the link below:
 
-https://mijangos.shinyapps.io/ 
+https://mijangos.shinyapps.io/pop_gen/
 
 The COVID-19 pandemic not only forced educational institutions to shift teaching from face-to-face to online but also had detrimental repercussions on students' mental health, including depression and anxiety. These repercussions ultimately result in deficits in learning, attention, comprehension and retention.
 
