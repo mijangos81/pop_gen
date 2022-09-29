@@ -1,5 +1,9 @@
 # Interactive web application to teach population genetics
 
+This web application can be accessed by clicking on the link below:
+
+https://mijangos.shinyapps.io/ 
+
 The COVID-19 pandemic not only forced educational institutions to shift teaching from face-to-face to online but also had detrimental repercussions on students' mental health, including depression and anxiety. These repercussions ultimately result in deficits in learning, attention, comprehension and retention.
 
 To restore the confidence and abilities of students, it is necessary to develop and adopt new teaching and learning strategies to guarantee the academic progression of the generations of students affected by the pandemic.
