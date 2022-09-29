@@ -5,7 +5,7 @@ account: mijangos
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 5705524
-bundleId: 5836643
+bundleId: 6346099
 url: https://mijangos.shinyapps.io/pop_gen/
-when: 1650939694.72603
-lastSyncTime: 1650939694.72604
+when: 1664345700.86951
+lastSyncTime: 1664345700.86952

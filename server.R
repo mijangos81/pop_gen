@@ -1,9 +1,14 @@
 
 library(shiny)
+library(gifski)
+library(png)
 
 
-shinyServer(function(input, output){
+shinyServer(function(input, output,session){
   
+  # Sys.sleep(10)
+  # waiter_hide()
+  # 
   # session$onFlushed(function() {
   #   Sys.sleep(5)
   #   waiter::waiter_hide()
@@ -142,6 +147,77 @@ ggplot() +
   
   })
   
+  #######################################################################
+  ############### WAHLUND EFFECT #########################################
+  #######################################################################
+  
+  observeEvent(input$close_wal, {
+    
+    n_pop  <- isolate(input$no_pop)
+    pop_sizes_tmp <- ceiling(100/n_pop)
+    pop_sizes_tmp <- (pop_sizes_tmp %% 2 != 0) + pop_sizes_tmp
+    pop_sizes <- paste(rep(pop_sizes_tmp,n_pop),collapse = " ")
+    
+    # reference table for the simulations
+    res <- gl.sim.WF.table(file_var = "ref_variables.csv",
+                           interactive_vars = FALSE,
+                           chunk_number=50)
+    
+    sim <- gl.sim.WF.run(
+      file_var = "sim_variables.csv",
+      ref_table = res,
+      every_gen = 2,
+      sample_percent = 100,
+      interactive_vars = FALSE,
+      gen_number_phase2= 50,
+      population_size_phase2= pop_sizes,
+      number_pops_phase2 = n_pop,
+      dispersal_phase2 = FALSE
+    )
+    
+    res_1 <- sim[[1]]
+    
+    output$plot_wal <- renderImage({
+      # A temp file to save the output.
+      # This file will be removed later by renderImage
+      outfile <- tempfile(fileext='.gif')
+      
+      res_4 <- lapply(res_1,function(y){
+        pop(y) <- rep(as.factor("1"),nInd(y))
+        stats <- utils.basic.stats(y)
+        res_wal <- as.data.frame(cbind(stats$overall[1], stats$overall[2], y$other$sim.vars$generation))
+        return(res_wal)
+        
+      })
+      
+      res_5 <- rbindlist(res_4)
+      colnames(res_5) <- c("Ho","He","gen")
+      
+      p <- ggplot(res_5)+
+        geom_line(aes(x=gen,y=Ho,colour="Observed"),size=2) +
+        geom_line(aes(x=gen,y=He,colour="Expected"),size=2) +
+        # geom_point(size=4) +
+        ylim(0,1)+
+        scale_colour_manual(values = c("brown","deeppink")) +
+        guides(color=guide_legend("Heterozygosity")) +
+        theme_few(base_size = 18) +
+        ylab("Heterozygosity") +
+        xlab("GENERATION")+
+        transition_reveal(gen)
+      
+      save_file <- paste0(getwd(),"/outfile_wal.gif")
+      
+      anim_save(save_file, animate(p,nframes=10,duration=4, height = 4, 
+                                   width = 10, units = "in", res = 100,
+                                   renderer = gifski_renderer()))
+      
+      # Return a list containing the filename
+      list(src = save_file, contentType = 'image/gif')
+      
+    }, deleteFile = TRUE)
+    
+  })
+  
   
   #######################################################################
   ############### GENETIC DRIFT #########################################
@@ -194,7 +270,9 @@ ggplot() +
         xlab("GENERATION")+
         transition_reveal(gen)
 
-      anim_save("outfile.gif", animate(p,nframes=15,duration=4, height = 4, width = 10, units = "in", res = 100))
+      anim_save("outfile.gif", animate(p,nframes=15,duration=4, height = 4,
+                                       width = 10, units = "in", res = 100,
+                                       renderer = gifski_renderer()))
 
       # Return a list containing the filename
       list(src = "outfile.gif",contentType = 'image/gif')
@@ -298,7 +376,10 @@ ggplot() +
                     theme(legend.position =  "bottom") +
         gganimate::transition_reveal(gens)
 
-      anim_save("outfile.gif", animate(p,nframes=20,duration=4, height = 4, width = 6, units = "in", res = 100))
+      anim_save("outfile.gif", animate(p,nframes=20,duration=4, 
+                                       height = 4, width = 6, units = "in", 
+                                       res = 100,
+                                       renderer = gifski_renderer()))
 
       # Return a list containing the filename
       list(src = "outfile.gif",contentType = 'image/gif')

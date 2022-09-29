@@ -9,6 +9,9 @@ library(data.table)
 library(waiter)
 library(symengine)
 library(BiocManager)
+library(tidyverse)
+source("basic.stats.R")
+
 # options(repos = BiocManager::repositories())
 # library(gdsfmt)
 # BiocManager::install("gdsfmt")
@@ -20,6 +23,18 @@ shinyUI(
   fluidPage(
   autoWaiter(color="white",html = spin_whirly()),
   theme = shinythemes::shinytheme("cerulean"),
+  
+  # waiter::waiter_show_on_load(
+  #   html =   div(
+  #     h1("POPULATION GENETICS"),
+  #     tags$h1("Initializing"),
+  #     div(
+  #       waiter::spin_google()
+  #     )
+  #   ),
+  #   color = "#FFFFFF",
+  #   image = "gene_flow.png"
+  # ),
 
   titlePanel(
     "Population genetics"
@@ -98,7 +113,7 @@ shinyUI(
             tags$li("Add a few grains of wheat."),
             tags$li("Wait 21 days,  and the mouse will appear spontaneously.")),
           
-          p(em("I am not very convinced about this recipe,"), "could have been one of",strong("Charles Darwin’s"), "thoughts about this 17th-century recipe before embarking on his trip to the Galapagos Islands. Some years later in 1859, Darwin proposed instead in his book:",strong(em("'On the origin of species by means of natural selection',")), "that all the species descend from a common ancestor, as branches of a tree join its trunk. He also proposed that species originated by natural selection, a process in which the fittest individuals will survive, reproduce and pass their traits to their offspring. At about the same time in 1866,",strong("Gregor Mendel"), "discovered that physical characteristics are inherited through discrete and independent pieces of information and that each parent provides precisely half of these pieces of information, which were called later genes.",style = "color:black;text-align:justify"),
+          p(em("I am not very convinced about this method,"), "could have been one of",strong("Charles Darwin’s"), "thoughts about this 17th-century recipe before embarking on his trip to the Galapagos Islands. Some years later in 1859, Darwin proposed instead in his book:",strong(em("'On the origin of species by means of natural selection',")), "that all the species descend from a common ancestor, as branches of a tree join its trunk. He also proposed that species originated by natural selection, a process in which the fittest individuals will survive, reproduce and pass their traits to their offspring. At about the same time in 1866,",strong("Gregor Mendel"), "discovered that physical characteristics are inherited through discrete and independent pieces of information and that each parent provides precisely half of these pieces of information, which were called later genes.",style = "color:black;text-align:justify"),
           br(),
           div(img(src='Darwin.png',width="150",height="200"), 
               img(src='Mendel.png',width="150",height="200"), 
@@ -114,7 +129,7 @@ shinyUI(
               style="text-align: center;"),
           br(),
           
-          p("Some decades later, in the 1960s, it was already clear that natural selection is the predominant force driving evolutionary change at the phenotypic level, as first proposed by Darwin. However, little was known about the kind and amount of variation at the gene level due to a lack of a suitable technique to determine it unambiguously. In line with the assertion that natural selection is the primary evolutionary force at the phenotypic level, researchers at the time considered that natural selection played an equally important role in determining variation at the gene level. Two main genetic variation hypotheses existed. The",strong("classical hypothesis"),"proposed that variation should be low because most mutations would be deleterious and eliminated rapidly by natural selection. The",strong("balance hypothesis"), "proposed that variation should be high because natural selection maintains variation by favouring heterozygote genotypes. In 1966, researchers using the first molecular techniques based on the electrophoretic mobility of proteins reported unexpectedly high genetic variation, data which supported the balance hypothesis. However, soon after in 1968,",strong("Motoo Kimura"), "proposed that most genetic variation between individuals and between species is selectively almost",strong("neutral"), "(i.e. it has little or no negative or positive effects on fitness for survival or reproduction). Thus the fate of neutral genes, whether lost or becoming fixed, is dictated by the random sampling of genes occurring from one generation to the next",strong("('genetic drift')"), "rather than by natural selection. Kimura’s",strong("neutral theory of molecular evolution"), "is now an established model in population genetics to describe and predict patterns of genetic diversity.",style = "color:black;text-align:justify"),
+          p("Some decades later, in the 1960s, it was already clear that natural selection is the predominant force driving evolutionary change at the phenotypic level, as first proposed by Darwin. However, little was known about the kind and amount of variation at the gene level due to a lack of a suitable technique to determine it unambiguously. In line with the assertion that natural selection is the primary evolutionary force at the phenotypic level, researchers at the time considered that natural selection played an equally important role in determining variation at the molecular level. Two main genetic variation hypotheses existed. The",strong("classical hypothesis"),"proposed that variation should be low because most mutations would be deleterious and eliminated rapidly by natural selection. The",strong("balance hypothesis"), "proposed that variation should be high because natural selection maintains variation by favouring heterozygote genotypes. In 1966, researchers using the first molecular techniques based on the electrophoretic mobility of proteins reported unexpectedly high genetic variation, data which supported the balance hypothesis. However, soon after in 1968,",strong("Motoo Kimura"), "proposed that most genetic variation between individuals and between species is selectively almost",strong("neutral"), "(i.e. it has little or no negative or positive effects on fitness for survival or reproduction). Thus the fate of neutral genes, whether lost or becoming fixed, is dictated by the random sampling of genes occurring from one generation to the next",strong("('genetic drift')"), "rather than by natural selection. Kimura’s",strong("neutral theory of molecular evolution"), "is now an established model in population genetics to describe and predict patterns of genetic diversity.",style = "color:black;text-align:justify"),
           br(),
           
           div(img(src='Kimura.png',width="150",height="200"), 
@@ -127,7 +142,7 @@ shinyUI(
       hr(),
       
       h3(p(
-        em("SIMULATIONS "),
+        em("ACTIVITY"),
         icon("dna", lib = "font-awesome"),
         style = "color:black;text-align:center"
       )),
@@ -169,7 +184,7 @@ shinyUI(
         column(width = 6,
                br(),
               
-          p("It is a field in genetics that uses",strong("mathematical models"), "to understand how and why allele frequencies change over time due to the action of the",strong("five evolutionary forces:"),style = "color:black;text-align:justify"),
+          p("It is a field in genetics that uses",strong("mathematical models"), ", and other resources, to understand how and why allele frequencies change over time due to the action of the",strong("five evolutionary forces:"),style = "color:black;text-align:justify"),
           
           h5(strong(tags$ol(
             tags$li("Mutation."),
@@ -232,7 +247,7 @@ shinyUI(
           h5(strong(tags$ol(
             tags$li(em("f(Aa) = 2pq"), "for heterozygotes."),
             tags$li(em("f(AA) = p2"), "for AA homozygotes,"),
-            tags$li(em("f(AA) = p2"), "for AA homozygotes,"),style = "color:black;text-align:justify"))),
+            tags$li(em("f(aa) = q2"), "for aa homozygotes,"),style = "color:black;text-align:justify"))),
           
           style = "text-align:justify;color:black;background-color:papayawhip;padding:15px;border-radius:10px"
       )
@@ -299,7 +314,7 @@ shinyUI(
       fluidRow(
         column(width = 3),
         column(width = 6, 
-               h3(p(strong("How can we measure genetic diversity?"),
+               h3(p(strong("What is genetic diversity and why is important?"),
                     style = "color:black;text-align:center")
                ), style = "background-color:burlywood;padding:10px;border-radius: 20px")
       ),
@@ -312,18 +327,80 @@ shinyUI(
         column(width = 6,
                br(),
                
-               p("We can measure",strong("genetic diversity"), "within populations by estimating the proportion of heterozygotes in each locus. This measure is called",strong("heterozygosity."), "We can measure heterozygosity in two ways. The first one consists in simply counting the actual number of heterozygote individuals and divide it by the number of individuals. This measure is called",strong("Observed heterozygosity"),"and abreviatead",strong(em("Ho.")), "The second way is to use the Hardy-Weinberg principle to calculate the expected number of heterozygotes based on allele frequencies. This measure is called",strong("Expected heterozygosity"),"and abreviated",strong(em("He.")),"So,", strong(em("He = 2pq.")), "This is the preferred measure to report because it is less affected than Ho when we don’t sample the whole population (i.e. sampling bias).", style = "color:black;text-align:justify"),
+               p(strong("Genetic diversity or genetic variation"), "is a general term to refer to the number and combination of alleles or genotypes present in a population or species. We can talk about the amount of genetic diversity present in a locus, in a group of loci or across the whole genome.", style = "color:black;text-align:justify"),
+               
+              p("Genetic diversity can be broadly classified as",strong("neutral or non-adaptive and under selection or adaptive."), "Neutral genetic diversity does not affect",strong("fitness"),"(i.e. survival or reproduction of living organisms), contrary to adaptive genetic diversity, which affects fitness.", style = "color:black;text-align:justify"),
+               
+               p("Genetic diversity is essential for species and populations to respond to environmental change because it is",strong("the raw material upon which natural selection acts to bring about adaptive evolutionary change."),"Therefore, the amount of genetic diversity present in a population or species reflects its",strong("evolutionary potential."), "In general, small and isolated populations have less genetic diversity than large and connected populations.", style = "color:black;text-align:justify"),
+               
+               p("We can measure",strong("genetic diversity"), "within populations by estimating the proportion of heterozygotes in each locus. This measure is called",strong("heterozygosity."), "We can measure heterozygosity in each locus in two ways. The first one consists in simply counting the actual number of heterozygote individuals and divide it by the number of individuals. This measure is called",strong("Observed heterozygosity"),"and abreviatead",strong(em("Ho.")), "The second way is to use the Hardy-Weinberg principle to calculate the expected number of heterozygotes based on allele frequencies. This measure is called",strong("Expected heterozygosity"),"and abreviated",strong(em("He.")),"So,", strong(em("He = 2pq.")), "This is the preferred measure to report because it is less affected than",em("Ho"), "when we don’t sample the whole population (i.e. sampling bias).", style = "color:black;text-align:justify"),
 
                p("In the next section, we will learn about one of the evolutionary forces that have major consequences in 'ecological timeframes' (i.e. in a period of tens to hundreds of years), especially in small populations:",strong("genetic drift."), style = "color:black;text-align:justify"),
       
       style = "text-align:justify;color:black;background-color:papayawhip;padding:15px;border-radius:10px"
+      )),
+      
+      hr(),
+      
+      h3(p(
+        em("ACTIVITY "),
+        icon("dna", lib = "font-awesome"),
+        style = "color:black;text-align:center"
+      )),
+      tags$style(
+        HTML(
+          ".js-irs-0 .irs-single, .js-irs-0 .irs-bar-edge, .js-irs-0 .irs-bar {background: coral; border-top: 1px coral; border-bottom: 1px coral;border-left: 1px coral}"
+        )
       ),
+      tags$style(
+        HTML(
+          ".js-irs-0 .irs-max, .js-irs-0 .irs-min {background:papayawhip}"
+        )
+      ),
+      
+      br(),
+      
+      sidebarLayout(
 
+        
+        sidebarPanel(
+          
+          p("To see the Hardy-Weinberg principle in action, use the slider below to choose the frequency of the",strong("A"),"allele",strong("(p)."),"As we have just two alleles, the frequency of the",strong("a"),"allele is simply:",strong(em("q = 1 - p.")), style = "color:black;text-align:justify"),
+          
+          p("This graphic shows the genotype proportions based on the Hardy–Weinberg principle, which assumes that the union of the gametes produced by females and males is random.", style = "color:black;text-align:justify"),
+          
+          p(strong("Can you tell what is the allele frequency that maximises the most the proportion of heterozygotes?"), style = "color:black;text-align:justify"),
+          
+          br(),
+          
+          sliderInput(
+            "no_pop",
+            tags$div(
+              "Number of populations"
+            ),
+            value = 1,
+            min = 1,
+            max = 5,
+            step = 1
+          ),
+          br(),
+        actionButton(
+          "close_wal",
+          label = h4(strong("RUN")),
+          icon = icon("play"),
+          width = "100%",
+          class = "btn-success"
+        )
+      ),
+        mainPanel(
+          plotOutput("plot_wal")
+        )
+      ),
       br(),
 
       p(em("Developed by"), br("Luis Mijangos"), style =
           "text-align:center; font-family: times")
-    )
+
     ),
     
     #######################################################################
@@ -345,14 +422,7 @@ shinyUI(
       fluidRow(
         column(width = 3),
         column(width = 6,
-        p("Within a population, alleles are not sampled perfectly when parents pass their alleles to their children; instead, rare alleles (those with a low frequency) are prone to be lost and common alleles to become fixed. This sampling error is called genetic drift, and its effects increase as the population size decreases.", style = "color:black;text-align:center"),
-        
-        p("Let’s use simulations to exemplify how genetic drift changes allele frequencies in populations of different sizes. Use the slider below to choose a population size to simulate, and then click on the RUN button and wait a few seconds for the simulation results to appear. Try to run simulations with different population sizes and pay attention to how much allele frequencies change from one generation to the next.", style = "color:black;text-align:center"),
-        
-        p("Can you identify which alleles are lost and which become fixed?", style = "color:black;text-align:center"),
-
-        p("When you are done, click on the next section:",strong("effective population size"), style = "color:black;text-align:center"),
-
+        p("Within a population, alleles are not sampled perfectly when parents pass their alleles to their children; instead, rare alleles (those with a low frequency) are prone to be lost and common alleles to become fixed. This sampling error is called",strong("genetic drift,"), "and its effects increase as the population size decreases.", style = "color:black;text-align:justify"),
         
         style = "text-align:justify;color:black;background-color:papayawhip;padding:15px;border-radius:10px")
       ),
@@ -378,6 +448,14 @@ shinyUI(
 
       sidebarLayout(
         sidebarPanel(
+          
+          p("Let’s use simulations to exemplify how genetic drift changes allele frequencies in populations of different sizes. Use the slider below to choose a population size to simulate, and then click on the",strong("RUN"), "button and wait a few seconds for the simulation results to appear.", style = "color:black;text-align:justify"),
+          
+          p("Try to run simulations with different population sizes and pay attention to how much allele frequencies change from one generation to the next.", style = "color:black;text-align:justify"),
+          
+          p(strong("Can you identify which alleles are lost and which become fixed?", style = "color:black;text-align:center")),
+          
+          p("When you are done, click on the next section:",strong("effective population size"), style = "color:black;text-align:justify"),
 
           sliderInput(
             "population_size_phase2",
@@ -429,7 +507,7 @@ shinyUI(
             column(width = 6,
               p("The effective population size is a powerful idea that reduces the effect of genetic drift on genetic diversity to one variable allowing us to use population genetic models without having to worry about the specific characteristics of a population that are difficult or even impossible to determine.", style = "color:black;text-align:justify"),
 
-              p("Effective population size (abbreviated Ne) is defined as the size of an idealised population that would have the same amount of genetic drift as the population under consideration.",style = "color:black;text-align:justify"),
+              p(strong("Effective population size (abbreviated Ne) is defined as the size of an idealised population that would have the same amount of genetic drift as the population under consideration."),style = "color:black;text-align:justify"),
 
               p("Not very enlightening, isn't it? Don't worry, we will go bit by bit and use computer simulations to explain the difficult parts.",style = "color:black;text-align:center"),
 
@@ -440,7 +518,7 @@ shinyUI(
           hr(),
 
           h3(p(
-            em("SIMULATIONS "),
+            em("ACTIVITY "),
             icon("dna", lib = "font-awesome"),
             style = "color:black;text-align:center"
           )),
@@ -502,7 +580,7 @@ shinyUI(
 
       hr(),
       h3(p(
-        em("SIMULATIONS "),
+        em("ACTIVITY"),
         icon("chart-pie", lib = "font-awesome"),
         style = "color:black;text-align:center"
       )),
