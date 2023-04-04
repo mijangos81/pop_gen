@@ -10,6 +10,7 @@ library(waiter)
 library(symengine)
 library(BiocManager)
 library(tidyverse)
+library(yonder)
 source("basic.stats.R")
 
 # options(repos = BiocManager::repositories())
@@ -24,18 +25,23 @@ shinyUI(
   autoWaiter(color="white",html = spin_whirly()),
   theme = shinythemes::shinytheme("cerulean"),
   
-  # waiter::waiter_show_on_load(
-  #   html =   div(
-  #     h1("POPULATION GENETICS"),
-  #     tags$h1("Initializing"),
-  #     div(
-  #       waiter::spin_google()
-  #     )
-  #   ),
-  #   color = "#FFFFFF",
-  #   image = "gene_flow.png"
-  # ),
-
+  waiter::waiter_show_on_load(
+    html =   div(
+      d2("Introduction to Population Genetics") %>%
+        yonder::font(color = "white") %>%
+        yonder::margin(b = 5, r = 2, l = 2),
+      tags$h1("Powered by University of Sydney") %>%
+        font(color = "white"),
+      tags$h1("Developed by Jaime Gongora & Luis Mijangos") %>%
+        font(color = "white"),
+      div(
+        waiter::spin_ball()
+      ) %>%
+        yonder::margin(top = -4)
+    ),
+    color = "cornflowerblue"
+  ),
+  
   titlePanel(
     "Population genetics"
   ),

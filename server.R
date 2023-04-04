@@ -6,15 +6,9 @@ library(png)
 
 shinyServer(function(input, output,session){
   
-  # Sys.sleep(10)
-  # waiter_hide()
-  # 
-  # session$onFlushed(function() {
-  #   Sys.sleep(5)
-  #   waiter::waiter_hide()
-  #   # showModal(licenseModal())
-  # })
-  # 
+  Sys.sleep(10)
+  
+  waiter::waiter_hide()
   
   # observeEvent(input$q_distribution, {
   #   
